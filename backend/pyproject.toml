@@ -1,0 +1,56 @@
+[project]
+name = "expense-agent-backend"
+version = "0.1.0"
+description = "Agentic Multi-User Expense Management Platform"
+authors = [{ name = "Agentic Team" }]
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "pydantic>=2.8.0",
+    "email-validator>=2.0.0",
+    "pydantic-settings>=2.4.0",
+    "sqlalchemy>=2.0.30",
+    "greenlet>=3.0.0",
+    "alembic>=1.13.0",
+    "asyncpg>=0.29.0",
+    "aiosqlite>=0.20.0",
+    "pgvector>=0.3.0",
+    "redis>=5.0.0",
+    "arq>=0.26.0",
+    "pyjwt>=2.9.0",
+    "bcrypt>=4.2.0",
+    "cryptography>=43.0.0",
+    "pillow>=10.4.0",
+    "matplotlib>=3.9.0",
+    "agno>=3.1.0",
+    "openai>=1.50.0",
+    "anthropic>=0.34.0",
+    "google-genai>=1.0.0",
+    "groq>=0.11.0",
+    "ollama>=0.3.0",
+    "httpx>=0.27.0",
+    "python-dotenv>=1.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=5.0.0",
+    "ruff>=0.6.0",
+    "mypy>=1.11.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["."]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::UserWarning",
+]
