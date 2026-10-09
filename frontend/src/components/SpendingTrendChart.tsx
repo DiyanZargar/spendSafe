@@ -10,6 +10,7 @@ import {
 } from 'recharts';
 import { SpendingTrendPoint } from '../types';
 import { formatCurrency } from '../utils/formatters';
+import { useTheme } from '../context/ThemeContext';
 
 interface SpendingTrendChartProps {
   data: SpendingTrendPoint[];
@@ -20,15 +21,16 @@ export const SpendingTrendChart: React.FC<SpendingTrendChartProps> = ({
   data,
   currency = 'USD',
 }) => {
+  const { isMonokai } = useTheme();
+
   if (!data || data.length === 0) {
     return (
-      <div className="h-64 flex items-center justify-center text-slate-400 text-sm">
-        No spending trend data available for this period.
+      <div className="h-64 flex items-center justify-center font-mono text-xs" style={{ color: 'var(--text-muted)' }}>
+        No spending trajectory detected for selected window.
       </div>
     );
   }
 
-  // Format short date for X-axis (e.g. "Oct 01")
   const chartData = data.map((d) => {
     let label = d.date;
     try {
@@ -44,29 +46,35 @@ export const SpendingTrendChart: React.FC<SpendingTrendChartProps> = ({
     };
   });
 
+  const strokeColor = isMonokai ? '#a6e22e' : '#059669';
+  const gridColor = isMonokai ? '#3e3d32' : '#f1f5f9';
+  const axisColor = isMonokai ? '#75715e' : '#94a3b8';
+
   return (
     <div className="h-72 w-full">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
           <defs>
             <linearGradient id="spendingTrendGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#059669" stopOpacity={0.25} />
-              <stop offset="95%" stopColor="#059669" stopOpacity={0.0} />
+              <stop offset="5%" stopColor={strokeColor} stopOpacity={0.35} />
+              <stop offset="95%" stopColor={strokeColor} stopOpacity={0.0} />
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />
           <XAxis
             dataKey="displayDate"
-            stroke="#94a3b8"
+            stroke={axisColor}
             fontSize={11}
             tickLine={false}
-            axisLine={{ stroke: '#e2e8f0' }}
+            axisLine={{ stroke: isMonokai ? '#3e3d32' : '#e2e8f0' }}
+            fontFamily="'JetBrains Mono', monospace"
           />
           <YAxis
-            stroke="#94a3b8"
+            stroke={axisColor}
             fontSize={11}
             tickLine={false}
             axisLine={false}
+            fontFamily="'JetBrains Mono', monospace"
             tickFormatter={(val) => `${val >= 1000 ? `${(val / 1000).toFixed(0)}k` : val}`}
           />
           <Tooltip
@@ -74,13 +82,22 @@ export const SpendingTrendChart: React.FC<SpendingTrendChartProps> = ({
               if (active && payload && payload.length) {
                 const item = payload[0].payload as typeof chartData[0];
                 return (
-                  <div className="bg-white border border-slate-200 p-2.5 rounded-xl shadow-lg text-xs">
-                    <div className="text-slate-500 font-medium mb-1">{item.date}</div>
-                    <div className="text-slate-900 font-extrabold text-sm">
+                  <div
+                    className="p-3 rounded-2xl border shadow-xl font-mono text-xs"
+                    style={{
+                      backgroundColor: 'var(--bg-card-elevated)',
+                      borderColor: 'var(--border-active)',
+                      color: 'var(--text-primary)',
+                    }}
+                  >
+                    <div className="text-[10px] mb-1" style={{ color: 'var(--text-muted)' }}>
+                      Date: {item.date}
+                    </div>
+                    <div className="text-base font-black" style={{ color: 'var(--accent-yellow)' }}>
                       {formatCurrency(item.amountNum, currency)}
                     </div>
-                    <div className="text-slate-400 text-[11px] mt-0.5">
-                      {item.count} transaction{item.count !== 1 ? 's' : ''}
+                    <div className="text-[10px] mt-1" style={{ color: 'var(--accent-cyan)' }}>
+                      {item.count} transaction{item.count !== 1 ? 's' : ''} logged
                     </div>
                   </div>
                 );
@@ -91,8 +108,8 @@ export const SpendingTrendChart: React.FC<SpendingTrendChartProps> = ({
           <Area
             type="monotone"
             dataKey="amountNum"
-            stroke="#059669"
-            strokeWidth={2.5}
+            stroke={strokeColor}
+            strokeWidth={3}
             fillOpacity={1}
             fill="url(#spendingTrendGrad)"
           />
