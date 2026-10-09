@@ -54,3 +54,7 @@ reports_output/
 *.swp
 *.swo
 .DS_Store
+
+# Resources
+resources/
+resource/
