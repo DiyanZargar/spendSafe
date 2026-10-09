@@ -136,9 +136,18 @@ Database (PostgreSQL + pgvector / Async SQLAlchemy 2.x)
 ## 4. Quick Start with Docker Compose
 
 1. **Clone & Setup Environment:**
-   ```bash
-   cp .env.example .env
-   ```
+   - **Linux & macOS**:
+     ```bash
+     cp .env.example .env
+     ```
+   - **Windows (PowerShell)**:
+     ```powershell
+     Copy-Item .env.example .env
+     ```
+   - **Windows (Command Prompt)**:
+     ```cmd
+     copy .env.example .env
+     ```
 
 2. **Launch all services:**
    ```bash
@@ -157,26 +166,116 @@ Database (PostgreSQL + pgvector / Async SQLAlchemy 2.x)
 
 ## 5. Local Development Setup (Without Docker)
 
-### Backend
+### Prerequisites
+- **Python 3.12+**
+- **Node.js 18+ & npm**
+- **PostgreSQL 15+** with the `pgvector` extension installed
+- **Redis 7+** (On Windows, use Redis via WSL2, Docker `docker run -p 6379:6379 -d redis:7`, or Memurai)
+
+---
+
+### Step 1: Backend Setup
+
+#### Linux & macOS
 ```bash
-# 1. Create and activate virtual environment
+# 1. Navigate to backend directory
 cd backend
+
+# 2. Create and activate virtual environment
 python3 -m venv .venv
 source .venv/bin/activate
 
-# 2. Install dependencies
+# 3. Install dependencies in editable mode
 pip install -e .
 
-# 3. Run FastAPI dev server
+# 4. Apply database migrations
+alembic upgrade head
+
+# 5. Start FastAPI dev server
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-### Frontend
+#### Windows (PowerShell)
+```powershell
+# 1. Navigate to backend directory
+cd backend
+
+# 2. Create and activate virtual environment
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+# Note: If script execution is disabled, allow it for this process:
+# Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+# 3. Install dependencies in editable mode
+pip install -e .
+
+# 4. Apply database migrations
+alembic upgrade head
+
+# 5. Start FastAPI dev server
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+#### Windows (Command Prompt / CMD)
+```cmd
+:: 1. Navigate to backend directory
+cd backend
+
+:: 2. Create and activate virtual environment
+python -m venv .venv
+.venv\Scripts\activate.bat
+
+:: 3. Install dependencies in editable mode
+pip install -e .
+
+:: 4. Apply database migrations
+alembic upgrade head
+
+:: 5. Start FastAPI dev server
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+---
+
+### Step 2: Background Task Worker (ARQ)
+
+To process scheduled reminders, recurring transaction auto-logging, and channel notifications:
+
+- **Linux & macOS**:
+  ```bash
+  cd backend
+  source .venv/bin/activate
+  arq app.workers.worker.WorkerSettings
+  ```
+
+- **Windows (PowerShell)**:
+  ```powershell
+  cd backend
+  .\.venv\Scripts\Activate.ps1
+  arq app.workers.worker.WorkerSettings
+  ```
+
+- **Windows (Command Prompt / CMD)**:
+  ```cmd
+  cd backend
+  .venv\Scripts\activate.bat
+  arq app.workers.worker.WorkerSettings
+  ```
+
+---
+
+### Step 3: Frontend Setup
+
+Works identically on Linux, macOS, and Windows:
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+
+The frontend will run at: **http://localhost:5173**
 
 ---
 
@@ -184,10 +283,17 @@ npm run dev
 
 Run the full pytest suite (uses fast in-memory SQLite async testing with full user isolation verification):
 
+### Linux & macOS
 ```bash
 make test
-# Or directly:
+# Or directly via pytest:
 cd backend && pytest -v tests/
+```
+
+### Windows (PowerShell & Command Prompt)
+```powershell
+cd backend
+pytest -v tests/
 ```
 
 **Test Coverage Highlights:**
