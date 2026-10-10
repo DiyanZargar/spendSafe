@@ -202,7 +202,7 @@ export const SpatialSidebar: React.FC<SpatialSidebarProps> = ({ currentTab, onSe
       <div className="pt-4 border-t px-2" style={{ borderColor: 'var(--border-subtle)' }}>
         <div className="flex items-center gap-2 text-[11px] font-mono" style={{ color: 'var(--text-muted)' }}>
           <ShieldCheck className="w-4 h-4 shrink-0" style={{ color: 'var(--accent-green)' }} />
-          {!isCollapsed && <span className="truncate">Tenant-Isolated Monolith</span>}
+          {!isCollapsed && <span className="truncate">Tenant-Isolated Workspace</span>}
         </div>
       </div>
     </aside>

@@ -11,7 +11,6 @@ import { DailySpendingChart } from '../components/DailySpendingChart';
 import { DayOfWeekChart } from '../components/DayOfWeekChart';
 import { TopMerchantsList } from '../components/TopMerchantsList';
 import { RecentTransactionsTable } from '../components/RecentTransactionsTable';
-import { TactileExpenseDialPad } from '../components/TactileExpenseDialPad';
 import { ExpenseModal } from '../components/ExpenseModal';
 import { Expense, ExpenseCreatePayload, Category } from '../types';
 
@@ -26,7 +25,6 @@ const PERIOD_OPTIONS = [
 export const DashboardPage: React.FC = () => {
   const queryClient = useQueryClient();
   const [period, setPeriod] = useState<string>('this_month');
-  const [isDialPadOpen, setIsDialPadOpen] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [expenseToEdit, setExpenseToEdit] = useState<Expense | null>(null);
 
@@ -152,7 +150,7 @@ export const DashboardPage: React.FC = () => {
 
           {/* Quick Tactile Dial Pad Button */}
           <button
-            onClick={() => setIsDialPadOpen(true)}
+            onClick={() => window.dispatchEvent(new CustomEvent('open-dialpad'))}
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-2xl text-xs font-bold transition-all hover:scale-105 active:scale-95 border"
             style={{
               backgroundColor: 'var(--bg-base)',
@@ -339,15 +337,6 @@ export const DashboardPage: React.FC = () => {
           isLoading={isExpensesLoading}
         />
       </div>
-
-      {/* Tactile Dial Pad Modal */}
-      <TactileExpenseDialPad
-        isOpen={isDialPadOpen}
-        onClose={() => setIsDialPadOpen(false)}
-        onSubmit={handleSaveExpense}
-        categories={categories}
-        currency={currency}
-      />
 
       {/* Standard Form Modal */}
       <ExpenseModal
