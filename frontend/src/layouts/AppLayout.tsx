@@ -22,9 +22,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   children,
 }) => {
   const queryClient = useQueryClient();
-  const [isDialPadOpen, setIsDialPadOpen] = useState(false);
+  const [activeConsole, setActiveConsole] = useState<'copilot' | 'dialpad' | 'none'>('copilot');
   const [isNewExpenseOpen, setIsNewExpenseOpen] = useState(false);
-  const [isChatOpen, setIsChatOpen] = useState(true); // Default open sticky to viewport
 
   const { data: categories = [] } = useQuery<Category[]>({
     queryKey: ['categories'],
@@ -48,30 +47,39 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'd') {
         e.preventDefault();
-        setIsDialPadOpen((prev) => !prev);
+        setActiveConsole((prev) => (prev === 'dialpad' ? 'none' : 'dialpad'));
       } else if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
-        setIsChatOpen((prev) => !prev);
+        setActiveConsole((prev) => (prev === 'copilot' ? 'none' : 'copilot'));
       }
     };
 
+    const handleCustomOpenDial = () => {
+      setActiveConsole('dialpad');
+    };
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('open-dialpad', handleCustomOpenDial);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('open-dialpad', handleCustomOpenDial);
+    };
   }, []);
 
   return (
     <div
-      className="min-h-screen flex flex-col transition-colors duration-200"
+      className="h-screen max-h-screen flex flex-col overflow-hidden transition-colors duration-200"
       style={{ backgroundColor: 'var(--bg-base)', color: 'var(--text-primary)' }}
     >
       {/* Top Cyber Command HUD */}
       <SpatialNavbar
         user={user}
-        onOpenDialPad={() => setIsDialPadOpen(true)}
+        onOpenDialPad={() => setActiveConsole((prev) => (prev === 'dialpad' ? 'none' : 'dialpad'))}
         onOpenNewExpense={() => setIsNewExpenseOpen(true)}
-        onToggleAiDrawer={() => setIsChatOpen(!isChatOpen)}
-        isAiDrawerOpen={isChatOpen}
-        onSearchFocus={() => setIsChatOpen(true)}
+        onToggleAiDrawer={() => setActiveConsole((prev) => (prev === 'copilot' ? 'none' : 'copilot'))}
+        isAiDrawerOpen={activeConsole === 'copilot'}
+        isDialPadOpen={activeConsole === 'dialpad'}
+        onSearchFocus={() => setActiveConsole('copilot')}
       />
 
       {/* Main Body */}
@@ -81,33 +89,35 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
 
         {/* Dynamic Center Workstation */}
         <main
-          className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 transition-colors duration-200"
+          className="flex-1 overflow-y-auto p-3 sm:p-5 lg:p-6 transition-colors duration-200"
           style={{ backgroundColor: 'var(--bg-base)' }}
         >
           {children}
         </main>
 
-        {/* Viewport-Pinned Sticky AI Neural Co-Pilot Console */}
-        {isChatOpen && (
+        {/* Viewport-Pinned Interactive Station (Hosts both Co-Pilot and Tactile Dial in exact same spot & size) */}
+        {activeConsole !== 'none' && (
           <aside className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 w-[350px] sm:w-[380px] animate-fadeIn pointer-events-auto">
-            <NeuralAICopilot
-              isFloating={true}
-              onClose={() => setIsChatOpen(false)}
-            />
+            {activeConsole === 'copilot' ? (
+              <NeuralAICopilot
+                isFloating={true}
+                onClose={() => setActiveConsole('none')}
+              />
+            ) : (
+              <TactileExpenseDialPad
+                isOpen={true}
+                onClose={() => setActiveConsole('none')}
+                onSwitchToCopilot={() => setActiveConsole('copilot')}
+                onSubmit={handleSaveExpense}
+                categories={categories}
+                currency={user?.currency || 'USD'}
+              />
+            )}
           </aside>
         )}
       </div>
 
-      {/* Tactile Dial Pad Modal */}
-      <TactileExpenseDialPad
-        isOpen={isDialPadOpen}
-        onClose={() => setIsDialPadOpen(false)}
-        onSubmit={handleSaveExpense}
-        categories={categories}
-        currency={user?.currency || 'USD'}
-      />
-
-      {/* Detailed Expense Modal */}
+      {/* Detailed Full-Form Modal (when requested) */}
       <ExpenseModal
         isOpen={isNewExpenseOpen}
         onClose={() => setIsNewExpenseOpen(false)}

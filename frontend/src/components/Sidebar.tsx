@@ -72,7 +72,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab }) => 
       <div className="pt-4 border-t border-slate-100 px-2">
         <div className="flex items-center gap-2 text-[11px] text-slate-500">
           <ShieldCheck className="w-4 h-4 text-emerald-600" />
-          <span>User-Isolated Monolith</span>
+          <span>User-Isolated Workspace</span>
         </div>
       </div>
     </aside>

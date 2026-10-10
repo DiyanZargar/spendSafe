@@ -1,5 +1,5 @@
 import React from 'react';
-import { LogOut, Plus, Sparkles, Wallet } from 'lucide-react';
+import { LogOut, Plus, Bot, Wallet } from 'lucide-react';
 import { authService } from '../services/auth';
 import { User } from '../types';
 
@@ -27,9 +27,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           <span className="text-base font-bold text-slate-900">
             Agentic Expense
           </span>
-          <span className="hidden sm:inline-block ml-2 text-xs px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200">
-            MVC Monolith
-          </span>
         </div>
       </div>
 
@@ -44,7 +41,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200'
             }`}
           >
-            <Sparkles className="w-4 h-4 text-emerald-600" />
+            <Bot className="w-4 h-4 text-emerald-600" />
             <span className="hidden sm:inline">AI Assistant</span>
           </button>
         )}

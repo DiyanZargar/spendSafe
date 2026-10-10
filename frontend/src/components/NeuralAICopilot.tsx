@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   Send,
-  Sparkles,
   Bot,
   User as UserIcon,
   RotateCcw,
@@ -144,7 +143,7 @@ export const NeuralAICopilot: React.FC<NeuralAICopilotProps> = ({
           boxShadow: '0 10px 25px rgba(0,0,0,0.3), 0 0 20px rgba(174, 129, 255, 0.3)',
         }}
       >
-        <Sparkles className="w-4 h-4 animate-spin" style={{ animationDuration: '4s' }} />
+        <Bot className="w-4 h-4 text-purple-400" />
         <span>Neural Co-Pilot</span>
         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
       </button>
@@ -178,7 +177,7 @@ export const NeuralAICopilot: React.FC<NeuralAICopilotProps> = ({
               color: 'var(--accent-purple)',
             }}
           >
-            <Sparkles className="w-3.5 h-3.5" />
+            <Bot className="w-3.5 h-3.5" />
           </div>
           <div>
             <div className="flex items-center gap-1.5 font-bold text-[11px] uppercase tracking-wider" style={{ color: 'var(--text-primary)' }}>

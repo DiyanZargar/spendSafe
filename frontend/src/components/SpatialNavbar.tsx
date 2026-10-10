@@ -1,12 +1,9 @@
 import React from 'react';
 import {
   Zap,
-  Sparkles,
+  Bot,
   Search,
   LogOut,
-  Sliders,
-  Shield,
-  Layers,
   Terminal,
 } from 'lucide-react';
 import { User } from '../types';
@@ -19,20 +16,21 @@ interface SpatialNavbarProps {
   onOpenNewExpense: () => void;
   onToggleAiDrawer: () => void;
   isAiDrawerOpen: boolean;
+  isDialPadOpen?: boolean;
   onSearchFocus?: () => void;
 }
 
 export const SpatialNavbar: React.FC<SpatialNavbarProps> = ({
   user,
   onOpenDialPad,
-  onOpenNewExpense,
   onToggleAiDrawer,
   isAiDrawerOpen,
+  isDialPadOpen = false,
   onSearchFocus,
 }) => {
   return (
     <header
-      className="sticky top-0 z-40 px-4 sm:px-6 py-3 transition-colors duration-200 border-b backdrop-blur-xl"
+      className="sticky top-0 z-40 px-4 sm:px-6 py-2.5 transition-colors duration-200 border-b backdrop-blur-xl"
       style={{
         backgroundColor: 'color-mix(in srgb, var(--bg-sidebar) 85%, transparent)',
         borderColor: 'var(--border-main)',
@@ -55,16 +53,6 @@ export const SpatialNavbar: React.FC<SpatialNavbarProps> = ({
             <div className="flex items-center gap-2">
               <span className="font-extrabold text-sm sm:text-base tracking-tight font-mono" style={{ color: 'var(--text-primary)' }}>
                 EXPENSE<span style={{ color: 'var(--accent-magenta)' }}>//</span>COCKPIT
-              </span>
-              <span
-                className="hidden sm:inline-block text-[10px] font-mono px-2 py-0.5 rounded-full border"
-                style={{
-                  backgroundColor: 'var(--bg-base)',
-                  borderColor: 'var(--border-subtle)',
-                  color: 'var(--accent-cyan)',
-                }}
-              >
-                v2.4 MONOLITH
               </span>
             </div>
             <div className="text-[10px] font-mono hidden md:flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}>
@@ -107,39 +95,50 @@ export const SpatialNavbar: React.FC<SpatialNavbarProps> = ({
           {/* Theme Toggle */}
           <ThemeToggle />
 
-          {/* Quick Dial Pad Launcher Button */}
-          <button
-            onClick={onOpenDialPad}
-            title="Open Tactile Dial Pad (Cmd+D)"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl text-xs font-mono font-bold transition-all hover:scale-105 active:scale-95 border"
+          {/* Quick Console Tools (Dial Pad & Co-Pilot Group) */}
+          <div
+            className="flex items-center p-1 rounded-2xl border gap-1"
             style={{
               backgroundColor: 'var(--bg-card)',
-              borderColor: 'var(--accent-yellow)',
-              color: 'var(--accent-yellow)',
-              boxShadow: '0 2px 8px rgba(230, 219, 116, 0.15)',
+              borderColor: 'var(--border-main)',
             }}
           >
-            <Zap className="w-3.5 h-3.5 fill-current" />
-            <span className="hidden sm:inline">Tactile Dial</span>
-          </button>
+            <button
+              onClick={onOpenDialPad}
+              title="Tactile Quick-Dial Pad (Cmd+D)"
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all ${
+                isDialPadOpen
+                  ? 'shadow-md border'
+                  : 'hover:bg-[var(--bg-hover)] opacity-85 hover:opacity-100'
+              }`}
+              style={{
+                backgroundColor: isDialPadOpen ? 'var(--bg-hover)' : 'transparent',
+                borderColor: isDialPadOpen ? 'var(--accent-yellow)' : 'transparent',
+                color: 'var(--accent-yellow)',
+              }}
+            >
+              <Zap className="w-3.5 h-3.5 fill-current" />
+              <span className="hidden sm:inline">Tactile Dial</span>
+            </button>
 
-          {/* AI Co-Pilot Toggle Button */}
-          <button
-            onClick={onToggleAiDrawer}
-            title="Toggle Neural Co-Pilot"
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-2xl text-xs font-mono font-bold transition-all hover:scale-105 border ${
-              isAiDrawerOpen ? 'shadow-lg' : ''
-            }`}
-            style={{
-              backgroundColor: isAiDrawerOpen ? 'var(--bg-hover)' : 'var(--bg-card)',
-              borderColor: 'var(--accent-purple)',
-              color: 'var(--accent-purple)',
-              boxShadow: isAiDrawerOpen ? '0 0 16px rgba(174, 129, 255, 0.25)' : 'none',
-            }}
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Co-Pilot</span>
-          </button>
+            <button
+              onClick={onToggleAiDrawer}
+              title="Neural Co-Pilot (Cmd+K)"
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all ${
+                isAiDrawerOpen
+                  ? 'shadow-md border'
+                  : 'hover:bg-[var(--bg-hover)] opacity-85 hover:opacity-100'
+              }`}
+              style={{
+                backgroundColor: isAiDrawerOpen ? 'var(--bg-hover)' : 'transparent',
+                borderColor: isAiDrawerOpen ? 'var(--accent-purple)' : 'transparent',
+                color: 'var(--accent-purple)',
+              }}
+            >
+              <Bot className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Co-Pilot</span>
+            </button>
+          </div>
 
           {/* User Profile & Logout */}
           {user && (

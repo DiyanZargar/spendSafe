@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Bot, Sparkles, User as UserIcon, Loader2, ArrowRight } from 'lucide-react';
+import { Send, Bot, User as UserIcon, Loader2, ArrowRight } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { chatService } from '../services/chat';
 
@@ -87,7 +87,7 @@ export const AIChatWidget: React.FC<AIChatWidgetProps> = ({
       <div className="px-4 py-3 bg-slate-50/80 border-b border-slate-200 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <div className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
-            <Sparkles className="w-4 h-4" />
+            <Bot className="w-4 h-4" />
           </div>
           <div>
             <h4 className="text-xs font-bold text-slate-900 flex items-center gap-1.5">

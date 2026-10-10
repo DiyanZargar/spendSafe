@@ -14,7 +14,6 @@ import {
   Copy,
   Check,
   RefreshCw,
-  Sparkles,
   Terminal,
   Cpu,
   ChevronDown,
@@ -436,36 +435,59 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto">
+    <div className="space-y-6 max-w-4xl mx-auto font-mono">
       <div>
-        <h2 className="text-xl font-bold text-slate-900 tracking-tight">Channel Connections & Integration Settings</h2>
-        <p className="text-xs text-slate-500">
+        <h2 className="text-xl font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
+          Channel Connections & Integration Settings
+        </h2>
+        <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
           Configure external communication channels directly in the UI. No backend environment credentials required.
         </p>
       </div>
 
       {/* Security Architecture Notice */}
-      <div className="p-4 rounded-2xl bg-emerald-50/80 border border-emerald-200 shadow-xs space-y-1.5">
-        <div className="flex items-center gap-2 text-emerald-800 font-bold text-xs">
-          <Shield className="w-4 h-4 text-emerald-600 shrink-0" />
+      <div
+        className="p-4 rounded-3xl border shadow-xs space-y-1.5"
+        style={{
+          backgroundColor: 'color-mix(in srgb, var(--accent-green) 12%, var(--bg-card))',
+          borderColor: 'color-mix(in srgb, var(--accent-green) 35%, transparent)',
+        }}
+      >
+        <div className="flex items-center gap-2 font-bold text-xs" style={{ color: 'var(--accent-green)' }}>
+          <Shield className="w-4 h-4 shrink-0" />
           <span>UI-Only Configuration & Zero-Knowledge Architecture</span>
         </div>
-        <p className="text-[11px] text-slate-700 leading-relaxed">
-          Messaging integrations (WhatsApp, Telegram, Slack) are configured <span className="font-bold text-emerald-800">strictly in this user interface</span>.
-          No channel tokens exist in backend <code className="text-[10px] bg-white px-1.5 py-0.5 rounded text-slate-800 border border-slate-200">.env</code> files.
-          All credentials are encrypted with <span className="font-bold text-emerald-700">AES-Fernet cryptography at rest</span> and are never exposed in API responses.
+        <p className="text-[11px] leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+          Messaging integrations (WhatsApp, Telegram, Slack) are configured <span className="font-bold text-emerald-400">strictly in this user interface</span>.
+          No channel tokens exist in backend <code className="text-[10px] px-1.5 py-0.5 rounded border" style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border-subtle)', color: 'var(--accent-cyan)' }}>.env</code> files.
+          All credentials are encrypted with <span className="font-bold text-emerald-400">AES-Fernet cryptography at rest</span> and are never exposed in API responses.
         </p>
       </div>
 
       {/* User profile card */}
-      <div className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex items-center justify-between">
+      <div
+        className="p-4 rounded-3xl border shadow-xs flex items-center justify-between"
+        style={{
+          backgroundColor: 'var(--bg-card)',
+          borderColor: 'var(--border-main)',
+        }}
+      >
         <div>
-          <div className="text-sm font-bold text-slate-900">{user?.full_name}</div>
-          <div className="text-xs text-slate-500">{user?.email}</div>
-          <div className="text-[11px] text-emerald-700 font-semibold mt-1">Default Currency: {user?.currency} • Timezone: {user?.timezone}</div>
+          <div className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>{user?.full_name}</div>
+          <div className="text-xs" style={{ color: 'var(--text-muted)' }}>{user?.email}</div>
+          <div className="text-[11px] font-semibold mt-1" style={{ color: 'var(--accent-cyan)' }}>
+            Default Currency: {user?.currency} • Timezone: {user?.timezone}
+          </div>
         </div>
-        <div className="px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold flex items-center gap-1.5">
-          <Lock className="w-3.5 h-3.5 text-emerald-600" />
+        <div
+          className="px-3 py-1 rounded-full border text-xs font-semibold flex items-center gap-1.5"
+          style={{
+            backgroundColor: 'var(--bg-hover)',
+            borderColor: 'var(--border-active)',
+            color: 'var(--accent-green)',
+          }}
+        >
+          <Lock className="w-3.5 h-3.5" />
           <span>Encrypted Session</span>
         </div>
       </div>
@@ -473,14 +495,17 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
       {/* Status banner */}
       {statusMsg && (
         <div
-          className={`p-3 rounded-xl text-xs flex items-center justify-between gap-2 ${
-            statusMsg.type === 'success'
-              ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
-              : 'bg-rose-50 border border-rose-200 text-rose-800'
-          }`}
+          className="p-3.5 rounded-2xl text-xs flex items-center justify-between gap-2 border"
+          style={{
+            backgroundColor: statusMsg.type === 'success'
+              ? 'color-mix(in srgb, var(--accent-green) 15%, var(--bg-card))'
+              : 'color-mix(in srgb, var(--accent-magenta) 15%, var(--bg-card))',
+            borderColor: statusMsg.type === 'success' ? 'var(--accent-green)' : 'var(--accent-magenta)',
+            color: 'var(--text-primary)',
+          }}
         >
           <div className="flex items-center gap-2">
-            {statusMsg.type === 'success' ? <CheckCircle className="w-4 h-4 shrink-0 text-emerald-600" /> : <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />}
+            {statusMsg.type === 'success' ? <CheckCircle className="w-4 h-4 shrink-0 text-emerald-400" /> : <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />}
             <span>{statusMsg.text}</span>
           </div>
           <button onClick={() => setStatusMsg(null)} className="text-[11px] opacity-70 hover:opacity-100">✕</button>
@@ -488,26 +513,53 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
       )}
 
       {/* ---------------- AI & LLM Provider Configuration Card ---------------- */}
-      <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs space-y-4">
+      <div
+        className="p-5 sm:p-6 rounded-3xl border shadow-xs space-y-4"
+        style={{
+          backgroundColor: 'var(--bg-card)',
+          borderColor: 'var(--border-main)',
+        }}
+      >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-purple-50 border border-purple-200 flex items-center justify-center text-purple-700">
+            <div
+              className="w-9 h-9 rounded-2xl flex items-center justify-center border"
+              style={{
+                backgroundColor: 'var(--bg-hover)',
+                borderColor: 'var(--border-subtle)',
+                color: 'var(--accent-purple)',
+              }}
+            >
               <Cpu className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <h3 className="text-sm font-bold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                 <span>AI & LLM Model Configuration</span>
                 {llmConfig?.configured ? (
-                  <span className="text-[10px] bg-emerald-50 border border-emerald-200 text-emerald-700 px-2 py-0.5 rounded-full font-semibold">
+                  <span
+                    className="text-[10px] px-2 py-0.5 rounded-full border font-semibold"
+                    style={{
+                      backgroundColor: 'var(--bg-hover)',
+                      borderColor: 'var(--border-active)',
+                      color: 'var(--accent-green)',
+                    }}
+                  >
                     {llmConfig.provider?.toUpperCase()} • {llmConfig.model}
                   </span>
                 ) : (
-                  <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-semibold">
+                  <span
+                    className="text-[10px] px-2 py-0.5 rounded-full border font-semibold"
+                    style={{
+                      backgroundColor: 'var(--bg-base)',
+                      borderColor: 'var(--border-subtle)',
+                      color: 'var(--text-muted)',
+                    }}
+                  >
                     Default / Offline Mode
                   </span>
                 )}
               </h3>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
                 Configure your personal AI provider and model directly in the UI. No backend environment credentials required.
               </p>
             </div>
@@ -521,7 +573,11 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                 }
               }}
               title="Remove LLM Configuration"
-              className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+              className="p-1.5 rounded-xl transition-colors hover:scale-110"
+              style={{
+                color: 'var(--accent-magenta)',
+                backgroundColor: 'var(--bg-hover)',
+              }}
             >
               <Trash2 className="w-4 h-4" />
             </button>
@@ -529,15 +585,29 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
         </div>
 
         {/* Informative Security Banner */}
-        <div className="p-3 bg-purple-50/60 border border-purple-200 rounded-xl text-[11px] text-purple-900 flex items-center justify-between">
+        <div
+          className="p-3.5 rounded-2xl border text-[11px] flex items-center justify-between"
+          style={{
+            backgroundColor: 'color-mix(in srgb, var(--accent-purple) 12%, var(--bg-card))',
+            borderColor: 'color-mix(in srgb, var(--accent-purple) 35%, transparent)',
+            color: 'var(--text-primary)',
+          }}
+        >
           <div className="flex items-center gap-2">
-            <Lock className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+            <Lock className="w-3.5 h-3.5 text-purple-400 shrink-0" />
             <span>
-              Your API key is encrypted at rest using <span className="font-semibold">AES-Fernet</span>. It is never exposed in plain text.
+              Your API key is encrypted at rest using <span className="font-bold text-purple-400">AES-Fernet</span>. It is never exposed in plain text.
             </span>
           </div>
           {llmConfig?.masked_api_key && (
-            <span className="font-mono text-[10px] bg-white px-2 py-0.5 rounded border border-purple-200 text-purple-700">
+            <span
+              className="font-mono text-[10px] px-2 py-0.5 rounded border"
+              style={{
+                backgroundColor: 'var(--bg-base)',
+                borderColor: 'var(--border-subtle)',
+                color: 'var(--accent-purple)',
+              }}
+            >
               Key: {llmConfig.masked_api_key}
             </span>
           )}
@@ -546,21 +616,30 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
         {/* Fetch models feedback banner */}
         {fetchModelsMsg && (
           <div
-            className={`p-3 rounded-xl text-xs flex items-center gap-2 ${
-              fetchModelsMsg.success
-                ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
-                : 'bg-rose-50 border border-rose-200 text-rose-800'
-            }`}
+            className="p-3 rounded-2xl text-xs flex items-center gap-2 border"
+            style={{
+              backgroundColor: fetchModelsMsg.success
+                ? 'color-mix(in srgb, var(--accent-green) 15%, var(--bg-card))'
+                : 'color-mix(in srgb, var(--accent-magenta) 15%, var(--bg-card))',
+              borderColor: fetchModelsMsg.success ? 'var(--accent-green)' : 'var(--accent-magenta)',
+              color: 'var(--text-primary)',
+            }}
           >
-            {fetchModelsMsg.success ? <CheckCircle className="w-4 h-4 shrink-0 text-emerald-600" /> : <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />}
+            {fetchModelsMsg.success ? <CheckCircle className="w-4 h-4 shrink-0 text-emerald-400" /> : <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />}
             <span>{fetchModelsMsg.text}</span>
           </div>
         )}
 
         {/* Last Executed curl command display */}
         {lastCurlCommand && (
-          <div className="p-3 bg-slate-900 rounded-xl space-y-1.5 border border-slate-800">
-            <div className="flex items-center justify-between text-[11px] text-slate-400">
+          <div
+            className="p-3.5 rounded-2xl space-y-1.5 border font-mono"
+            style={{
+              backgroundColor: 'var(--bg-base)',
+              borderColor: 'var(--border-main)',
+            }}
+          >
+            <div className="flex items-center justify-between text-[11px]" style={{ color: 'var(--text-muted)' }}>
               <span className="flex items-center gap-1.5 font-medium">
                 <Terminal className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Executed curl command to check available models:</span>
@@ -568,28 +647,36 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
               <button
                 type="button"
                 onClick={() => copyToClipboard(lastCurlCommand, 'curl_cmd')}
-                className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-bold"
+                className="flex items-center gap-1 font-bold transition-colors"
+                style={{ color: 'var(--accent-green)' }}
               >
                 {copiedWebhook === 'curl_cmd' ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
                 <span>{copiedWebhook === 'curl_cmd' ? 'Copied' : 'Copy curl'}</span>
               </button>
             </div>
-            <div className="font-mono text-[11px] text-emerald-300 break-all select-all">
+            <div className="text-[11px] break-all select-all font-mono" style={{ color: 'var(--accent-cyan)' }}>
               {lastCurlCommand}
             </div>
           </div>
         )}
 
         {/* OpenRouter Rate Limit Advice Notice */}
-        <div className="p-3 bg-amber-50/90 border border-amber-200 rounded-xl text-[11px] text-amber-900 space-y-1">
-          <div className="flex items-center gap-1.5 font-bold text-amber-800">
-            <AlertCircle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+        <div
+          className="p-3.5 rounded-2xl border text-xs space-y-1.5"
+          style={{
+            backgroundColor: 'color-mix(in srgb, var(--accent-yellow) 12%, var(--bg-card))',
+            borderColor: 'color-mix(in srgb, var(--accent-yellow) 35%, transparent)',
+            color: 'var(--text-primary)',
+          }}
+        >
+          <div className="flex items-center gap-1.5 font-bold" style={{ color: 'var(--accent-yellow)' }}>
+            <AlertCircle className="w-3.5 h-3.5 shrink-0" />
             <span>OpenRouter Free-Tier Daily Quotas & Alternative Free Providers:</span>
           </div>
-          <p className="leading-relaxed text-slate-700">
-            OpenRouter limits free accounts with $0 credits to a daily request quota. If you see HTTP 429 (<code className="text-[10px] bg-white px-1 py-0.5 rounded border border-amber-200 font-mono">Rate limit exceeded: free-models-per-day</code>), 
+          <p className="leading-relaxed text-[11px]" style={{ color: 'var(--text-primary)' }}>
+            OpenRouter limits free accounts with $0 credits to a daily request quota. If you see HTTP 429 (<code className="text-[10px] px-1 py-0.5 rounded border" style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border-subtle)', color: 'var(--accent-yellow)' }}>Rate limit exceeded: free-models-per-day</code>), 
             the Expense Agent continues to process all your Telegram messages and expenses smoothly via its built-in local engine!
-            You can also switch provider to <strong>Groq</strong> (which offers 14,400 free requests/day with <code className="text-[10px] bg-white px-1 py-0.5 rounded font-mono">llama-3.3-70b-versatile</code>) or <strong>Google Gemini</strong> in the dropdown.
+            You can also switch provider to <strong className="text-emerald-400">Groq</strong> (which offers 14,400 free requests/day with <code className="text-[10px] px-1 py-0.5 rounded border" style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border-subtle)', color: 'var(--accent-cyan)' }}>llama-3.3-70b-versatile</code>) or <strong className="text-cyan-400">Google Gemini</strong> in the dropdown.
           </p>
         </div>
 
@@ -597,7 +684,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Provider Selector */}
             <div>
-              <label className="block text-[11px] font-semibold text-slate-600 uppercase mb-1">
+              <label className="block text-[11px] font-semibold uppercase mb-1" style={{ color: 'var(--text-secondary)' }}>
                 LLM Provider
               </label>
               <select
@@ -606,7 +693,6 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                   const p = e.target.value as any;
                   setLlmProvider(p);
                   setAvailableModels([]);
-                  // Default suggested model per provider
                   if (p === 'openai') setLlmModel('gpt-4o');
                   else if (p === 'anthropic') setLlmModel('claude-3-5-sonnet-20241022');
                   else if (p === 'gemini') setLlmModel('gemini-1.5-flash');
@@ -614,7 +700,12 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                   else if (p === 'ollama') setLlmModel('llama3.1');
                   else setLlmModel('nvidia/nemotron-3-super-120b-a12b:free');
                 }}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-purple-500 font-semibold"
+                className="w-full px-3 py-2 rounded-2xl text-xs border focus:outline-none transition-colors font-semibold"
+                style={{
+                  backgroundColor: 'var(--bg-input)',
+                  borderColor: 'var(--border-main)',
+                  color: 'var(--text-primary)',
+                }}
               >
                 <option value="openai">OpenAI (GPT-4o, GPT-4o-mini, o1)</option>
                 <option value="anthropic">Anthropic (Claude 3.5 Sonnet, Haiku)</option>
@@ -627,10 +718,10 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
 
             {/* Model Name / Selector */}
             <div>
-              <label className="block text-[11px] font-semibold text-slate-600 uppercase mb-1 flex items-center justify-between">
+              <label className="block text-[11px] font-semibold uppercase mb-1 flex items-center justify-between" style={{ color: 'var(--text-secondary)' }}>
                 <span>Model Name / ID</span>
                 {availableModels.length > 0 && (
-                  <span className="text-emerald-700 font-normal lowercase text-[10px]">
+                  <span className="font-normal lowercase text-[10px]" style={{ color: 'var(--accent-green)' }}>
                     {availableModels.length} models fetched via curl
                   </span>
                 )}
@@ -640,7 +731,12 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                   <select
                     value={llmModel}
                     onChange={(e) => setLlmModel(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-purple-500 font-mono"
+                    className="w-full px-3 py-2 rounded-2xl text-xs border focus:outline-none transition-colors font-mono"
+                    style={{
+                      backgroundColor: 'var(--bg-input)',
+                      borderColor: 'var(--border-main)',
+                      color: 'var(--text-primary)',
+                    }}
                   >
                     {availableModels.map((m) => (
                       <option key={m} value={m}>
@@ -665,57 +761,56 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                   }
                   value={llmModel}
                   onChange={(e) => setLlmModel(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-purple-500 font-mono"
+                  className="w-full px-3 py-2 rounded-2xl text-xs border focus:outline-none transition-colors font-mono"
+                  style={{
+                    backgroundColor: 'var(--bg-input)',
+                    borderColor: 'var(--border-main)',
+                    color: 'var(--text-primary)',
+                  }}
                 />
               )}
 
               {/* Quick Model Selector Pills */}
               <div className="mt-2 flex flex-wrap gap-1.5 items-center">
-                <span className="text-[10px] text-slate-400 font-semibold mr-0.5">Quick Select:</span>
+                <span className="text-[10px] font-semibold mr-0.5" style={{ color: 'var(--text-muted)' }}>
+                  Quick Select:
+                </span>
                 {llmProvider === 'custom' && (
                   <>
                     <button
                       type="button"
                       onClick={() => setLlmModel('nvidia/nemotron-3-super-120b-a12b:free')}
-                      className={`text-[10px] px-2 py-0.5 rounded-md font-mono border transition-all ${
-                        llmModel === 'nvidia/nemotron-3-super-120b-a12b:free'
-                          ? 'bg-purple-100 border-purple-300 text-purple-800 font-bold'
-                          : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
-                      }`}
-                      title="Nvidia Nemotron 120B (Fast, tested 1.0s)"
+                      className="text-[10px] px-2 py-0.5 rounded-lg font-mono border transition-all"
+                      style={{
+                        backgroundColor: llmModel === 'nvidia/nemotron-3-super-120b-a12b:free' ? 'var(--bg-hover)' : 'var(--bg-base)',
+                        borderColor: llmModel === 'nvidia/nemotron-3-super-120b-a12b:free' ? 'var(--accent-purple)' : 'var(--border-subtle)',
+                        color: llmModel === 'nvidia/nemotron-3-super-120b-a12b:free' ? 'var(--accent-purple)' : 'var(--text-muted)',
+                      }}
+                      title="Nvidia Nemotron 120B"
                     >
                       nvidia/nemotron-3-super-120b-a12b:free
                     </button>
                     <button
                       type="button"
                       onClick={() => setLlmModel('inclusionai/ling-3.0-flash-sante:free')}
-                      className={`text-[10px] px-2 py-0.5 rounded-md font-mono border transition-all ${
-                        llmModel === 'inclusionai/ling-3.0-flash-sante:free'
-                          ? 'bg-purple-100 border-purple-300 text-purple-800 font-bold'
-                          : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
-                      }`}
+                      className="text-[10px] px-2 py-0.5 rounded-lg font-mono border transition-all"
+                      style={{
+                        backgroundColor: llmModel === 'inclusionai/ling-3.0-flash-sante:free' ? 'var(--bg-hover)' : 'var(--bg-base)',
+                        borderColor: llmModel === 'inclusionai/ling-3.0-flash-sante:free' ? 'var(--accent-purple)' : 'var(--border-subtle)',
+                        color: llmModel === 'inclusionai/ling-3.0-flash-sante:free' ? 'var(--accent-purple)' : 'var(--text-muted)',
+                      }}
                     >
                       inclusionai/ling-3.0-flash-sante:free
                     </button>
                     <button
                       type="button"
-                      onClick={() => setLlmModel('dots-studio/dots-3-note-preview:free')}
-                      className={`text-[10px] px-2 py-0.5 rounded-md font-mono border transition-all ${
-                        llmModel === 'dots-studio/dots-3-note-preview:free'
-                          ? 'bg-purple-100 border-purple-300 text-purple-800 font-bold'
-                          : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
-                      }`}
-                    >
-                      dots-studio/dots-3-note-preview:free
-                    </button>
-                    <button
-                      type="button"
                       onClick={() => setLlmModel('qwen/qwen3.8-27b:free')}
-                      className={`text-[10px] px-2 py-0.5 rounded-md font-mono border transition-all ${
-                        llmModel === 'qwen/qwen3.8-27b:free'
-                          ? 'bg-purple-100 border-purple-300 text-purple-800 font-bold'
-                          : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
-                      }`}
+                      className="text-[10px] px-2 py-0.5 rounded-lg font-mono border transition-all"
+                      style={{
+                        backgroundColor: llmModel === 'qwen/qwen3.8-27b:free' ? 'var(--bg-hover)' : 'var(--bg-base)',
+                        borderColor: llmModel === 'qwen/qwen3.8-27b:free' ? 'var(--accent-purple)' : 'var(--border-subtle)',
+                        color: llmModel === 'qwen/qwen3.8-27b:free' ? 'var(--accent-purple)' : 'var(--text-muted)',
+                      }}
                     >
                       qwen/qwen3.8-27b:free
                     </button>
@@ -726,54 +821,40 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                     <button
                       type="button"
                       onClick={() => setLlmModel('llama-3.3-70b-versatile')}
-                      className="text-[10px] px-2 py-0.5 rounded-md font-mono border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700"
+                      className="text-[10px] px-2 py-0.5 rounded-lg font-mono border"
+                      style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border-subtle)', color: 'var(--text-secondary)' }}
                     >
                       llama-3.3-70b-versatile
                     </button>
                     <button
                       type="button"
                       onClick={() => setLlmModel('llama-3.1-8b-instant')}
-                      className="text-[10px] px-2 py-0.5 rounded-md font-mono border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700"
+                      className="text-[10px] px-2 py-0.5 rounded-lg font-mono border"
+                      style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border-subtle)', color: 'var(--text-secondary)' }}
                     >
                       llama-3.1-8b-instant
                     </button>
                   </>
                 )}
                 {llmProvider === 'gemini' && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={() => setLlmModel('gemini-1.5-flash')}
-                      className="text-[10px] px-2 py-0.5 rounded-md font-mono border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700"
-                    >
-                      gemini-1.5-flash
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setLlmModel('gemini-1.5-pro')}
-                      className="text-[10px] px-2 py-0.5 rounded-md font-mono border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700"
-                    >
-                      gemini-1.5-pro
-                    </button>
-                  </>
+                  <button
+                    type="button"
+                    onClick={() => setLlmModel('gemini-1.5-flash')}
+                    className="text-[10px] px-2 py-0.5 rounded-lg font-mono border"
+                    style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border-subtle)', color: 'var(--text-secondary)' }}
+                  >
+                    gemini-1.5-flash
+                  </button>
                 )}
                 {llmProvider === 'openai' && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={() => setLlmModel('gpt-4o')}
-                      className="text-[10px] px-2 py-0.5 rounded-md font-mono border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700"
-                    >
-                      gpt-4o
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setLlmModel('gpt-4o-mini')}
-                      className="text-[10px] px-2 py-0.5 rounded-md font-mono border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700"
-                    >
-                      gpt-4o-mini
-                    </button>
-                  </>
+                  <button
+                    type="button"
+                    onClick={() => setLlmModel('gpt-4o-mini')}
+                    className="text-[10px] px-2 py-0.5 rounded-lg font-mono border"
+                    style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border-subtle)', color: 'var(--text-secondary)' }}
+                  >
+                    gpt-4o-mini
+                  </button>
                 )}
               </div>
             </div>
@@ -782,10 +863,10 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
           {/* API Key */}
           {llmProvider !== 'ollama' && (
             <div>
-              <label className="block text-[11px] font-semibold text-slate-600 uppercase mb-1 flex items-center justify-between">
+              <label className="block text-[11px] font-semibold uppercase mb-1 flex items-center justify-between" style={{ color: 'var(--text-secondary)' }}>
                 <span>Personal API Key</span>
                 {llmConfig?.configured && llmConfig.masked_api_key && !llmApiKey && (
-                  <span className="text-emerald-700 font-normal lowercase text-[10px]">
+                  <span className="font-normal lowercase text-[10px]" style={{ color: 'var(--accent-green)' }}>
                     Using currently stored key ({llmConfig.masked_api_key})
                   </span>
                 )}
@@ -800,12 +881,18 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                   }
                   value={llmApiKey}
                   onChange={(e) => setLlmApiKey(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-purple-500 font-mono pr-9"
+                  className="w-full px-3 py-2 rounded-2xl text-xs border focus:outline-none transition-colors font-mono pr-9"
+                  style={{
+                    backgroundColor: 'var(--bg-input)',
+                    borderColor: 'var(--border-main)',
+                    color: 'var(--text-primary)',
+                  }}
                 />
                 <button
                   type="button"
                   onClick={() => setShowLlmKey(!showLlmKey)}
-                  className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-700"
+                  className="absolute right-3 top-2.5 transition-colors"
+                  style={{ color: 'var(--text-muted)' }}
                 >
                   {showLlmKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -813,10 +900,10 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
             </div>
           )}
 
-          {/* Custom Base URL (For Ollama, Custom proxies, or Enterprise endpoints) */}
+          {/* Custom Base URL */}
           {(llmProvider === 'custom' || llmProvider === 'ollama' || llmProvider === 'openai' || llmProvider === 'groq') && (
             <div>
-              <label className="block text-[11px] font-semibold text-slate-600 uppercase mb-1">
+              <label className="block text-[11px] font-semibold uppercase mb-1" style={{ color: 'var(--text-secondary)' }}>
                 Custom Endpoint / Base URL {llmProvider === 'ollama' ? '(Ollama Host)' : '(Optional)'}
               </label>
               <input
@@ -830,18 +917,28 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                 }
                 value={llmBaseUrl}
                 onChange={(e) => setLlmBaseUrl(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-purple-500 font-mono"
+                className="w-full px-3 py-2 rounded-2xl text-xs border focus:outline-none transition-colors font-mono"
+                style={{
+                  backgroundColor: 'var(--bg-input)',
+                  borderColor: 'var(--border-main)',
+                  color: 'var(--text-primary)',
+                }}
               />
             </div>
           )}
 
-          {/* Action buttons: Run curl to fetch models & Save and Encrypt */}
+          {/* Action buttons */}
           <div className="flex items-center gap-3 pt-2">
             <button
               type="button"
               disabled={isFetchingModels || (!llmApiKey.trim() && !llmConfig?.configured && llmProvider !== 'ollama')}
               onClick={handleFetchModels}
-              className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-50 text-slate-800 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 border border-slate-200"
+              className="px-3.5 py-2 rounded-2xl text-xs font-semibold transition-all flex items-center gap-1.5 border disabled:opacity-50 hover:scale-102"
+              style={{
+                backgroundColor: 'var(--bg-hover)',
+                borderColor: 'var(--border-main)',
+                color: 'var(--text-primary)',
+              }}
             >
               <RefreshCw className={`w-3.5 h-3.5 ${isFetchingModels ? 'animate-spin' : ''}`} />
               <span>Run curl to Check Available Models</span>
@@ -850,7 +947,11 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
             <button
               type="submit"
               disabled={saveLlmMutation.isPending}
-              className="px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white rounded-xl text-xs font-semibold transition-all shadow-xs flex items-center gap-1.5"
+              className="px-4 py-2 rounded-2xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 disabled:opacity-50 hover:scale-102 active:scale-98"
+              style={{
+                backgroundColor: 'var(--accent-purple)',
+                color: '#ffffff',
+              }}
             >
               <Lock className="w-3.5 h-3.5" />
               <span>{llmConfig?.configured ? 'Update & Save LLM Configuration' : 'Save & Encrypt LLM'}</span>
@@ -860,40 +961,56 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
       </div>
 
       {/* Active connections list */}
-
-      <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs space-y-3">
+      <div
+        className="p-5 sm:p-6 rounded-3xl border shadow-xs space-y-3"
+        style={{
+          backgroundColor: 'var(--bg-card)',
+          borderColor: 'var(--border-main)',
+        }}
+      >
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+          <h3 className="text-sm font-bold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             <span>Your Connected Channels</span>
-            <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-mono">
+            <span
+              className="text-[10px] px-2 py-0.5 rounded-full border font-mono"
+              style={{
+                backgroundColor: 'var(--bg-base)',
+                borderColor: 'var(--border-subtle)',
+                color: 'var(--text-muted)',
+              }}
+            >
               {connections.length} active
             </span>
           </h3>
-          <span className="text-[11px] text-slate-500">Credentials encrypted with AES-Fernet</span>
+          <span className="text-[11px]" style={{ color: 'var(--text-muted)' }}>
+            Credentials encrypted with AES-Fernet
+          </span>
         </div>
 
         {isLoading ? (
-          <div className="py-6 text-center text-slate-400 text-xs flex items-center justify-center gap-2">
-            <RefreshCw className="w-4 h-4 animate-spin text-emerald-600" />
+          <div className="py-6 text-center text-xs flex items-center justify-center gap-2" style={{ color: 'var(--text-muted)' }}>
+            <RefreshCw className="w-4 h-4 animate-spin text-emerald-400" />
             <span>Loading channel connections...</span>
           </div>
         ) : connections.length === 0 ? (
-          <div className="text-slate-400 text-xs py-6 text-center border border-dashed border-slate-200 rounded-xl">
+          <div
+            className="text-xs py-6 text-center border border-dashed rounded-2xl"
+            style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}
+          >
             No external channels linked yet. Configure WhatsApp, Telegram, or Slack below to chat with your Expense Agent!
           </div>
         ) : (
-          <div className="divide-y divide-slate-100">
+          <div className="divide-y" style={{ borderColor: 'var(--border-subtle)' }}>
             {connections.map((c) => (
               <div key={c.id} className="py-3.5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div
-                    className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs ${
-                      c.channel_type === 'whatsapp'
-                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                        : c.channel_type === 'telegram'
-                        ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                        : 'bg-purple-50 text-purple-700 border border-purple-200'
-                    }`}
+                    className="w-9 h-9 rounded-2xl flex items-center justify-center font-bold text-xs border"
+                    style={{
+                      backgroundColor: 'var(--bg-hover)',
+                      borderColor: 'var(--border-subtle)',
+                      color: c.channel_type === 'whatsapp' ? 'var(--accent-green)' : c.channel_type === 'telegram' ? 'var(--accent-cyan)' : 'var(--accent-purple)',
+                    }}
                   >
                     {c.channel_type === 'whatsapp' ? (
                       <MessageCircle className="w-4 h-4" />
@@ -904,20 +1021,27 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                     )}
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-slate-900 capitalize flex items-center gap-2">
+                    <div className="text-xs font-bold capitalize flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                       <span>{c.channel_type}</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
-                      <span className="text-[10px] text-emerald-700 font-semibold">Active</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
+                      <span className="text-[10px] text-emerald-400 font-semibold">Active</span>
                     </div>
-                    <div className="text-[11px] text-slate-500 font-mono mt-0.5">
+                    <div className="text-[11px] font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
                       Target: {c.external_identifier}
                     </div>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <span className="text-[10px] text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full font-semibold flex items-center gap-1">
-                    <Lock className="w-3 h-3 text-emerald-600" />
+                  <span
+                    className="text-[10px] px-2.5 py-0.5 rounded-full border font-semibold flex items-center gap-1"
+                    style={{
+                      backgroundColor: 'var(--bg-hover)',
+                      borderColor: 'var(--border-subtle)',
+                      color: 'var(--accent-green)',
+                    }}
+                  >
+                    <Lock className="w-3 h-3 text-emerald-400" />
                     <span>Fernet Encrypted</span>
                   </span>
                   <button
@@ -939,9 +1063,14 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                       document.getElementById('channel-config-form')?.scrollIntoView({ behavior: 'smooth' });
                     }}
                     title="Edit Channel Configuration"
-                    className="p-1.5 rounded-lg text-slate-500 hover:text-emerald-700 hover:bg-emerald-50 transition-colors flex items-center gap-1 text-xs border border-slate-200"
+                    className="p-1.5 rounded-xl transition-colors flex items-center gap-1 text-xs border"
+                    style={{
+                      backgroundColor: 'var(--bg-hover)',
+                      borderColor: 'var(--border-main)',
+                      color: 'var(--text-primary)',
+                    }}
                   >
-                    <Edit2 className="w-3.5 h-3.5 text-emerald-600" />
+                    <Edit2 className="w-3.5 h-3.5 text-emerald-400" />
                     <span className="text-[11px] font-medium hidden sm:inline">Edit</span>
                   </button>
                   <button
@@ -951,9 +1080,13 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                       }
                     }}
                     title="Disconnect Channel"
-                    className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                    className="p-1.5 rounded-xl transition-colors"
+                    style={{
+                      color: 'var(--accent-magenta)',
+                      backgroundColor: 'var(--bg-hover)',
+                    }}
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>
@@ -963,12 +1096,19 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
       </div>
 
       {/* Add new connection forms */}
-      <div id="channel-config-form" className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs space-y-4">
+      <div
+        id="channel-config-form"
+        className="p-5 sm:p-6 rounded-3xl border shadow-xs space-y-4"
+        style={{
+          backgroundColor: 'var(--bg-card)',
+          borderColor: 'var(--border-main)',
+        }}
+      >
         <div>
-          <h3 className="text-sm font-bold text-slate-900">
+          <h3 className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
             {editingConnection ? `Edit ${editingConnection.channel_type.toUpperCase()} Channel` : 'Configure or Connect Channel'}
           </h3>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
             {editingConnection
               ? 'Update the external recipient identifier or enter new credentials. Existing encrypted secrets remain preserved.'
               : 'Select a provider, enter credentials, and test connection live before saving.'}
@@ -977,11 +1117,18 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
 
         {/* Editing active banner */}
         {editingConnection && (
-          <div className="p-3.5 bg-amber-50 border border-amber-200 rounded-xl flex items-center justify-between text-xs text-amber-900 font-medium">
+          <div
+            className="p-3.5 rounded-2xl border flex items-center justify-between text-xs font-medium"
+            style={{
+              backgroundColor: 'color-mix(in srgb, var(--accent-yellow) 12%, var(--bg-card))',
+              borderColor: 'color-mix(in srgb, var(--accent-yellow) 35%, transparent)',
+              color: 'var(--text-primary)',
+            }}
+          >
             <div className="flex items-center gap-2">
-              <Edit2 className="w-4 h-4 text-amber-700 shrink-0" />
+              <Edit2 className="w-4 h-4 text-amber-400 shrink-0" />
               <span>
-                Editing configured <strong>{editingConnection.channel_type.toUpperCase()}</strong> channel (Identifier: <code className="font-mono bg-white px-1.5 py-0.5 rounded border border-amber-200">{editingConnection.external_identifier}</code>).
+                Editing configured <strong>{editingConnection.channel_type.toUpperCase()}</strong> channel (Identifier: <code className="font-mono px-1.5 py-0.5 rounded border" style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border-subtle)', color: 'var(--accent-yellow)' }}>{editingConnection.external_identifier}</code>).
                 Leave token/secret fields blank to retain your existing encrypted credentials.
               </span>
             </div>
@@ -998,24 +1145,30 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                 setSlackBotToken('');
                 setSlackChannelId('');
               }}
-              className="px-2.5 py-1 bg-white border border-amber-300 rounded-lg text-amber-800 hover:bg-amber-100 text-[11px] font-semibold transition-colors"
+              className="px-2.5 py-1 rounded-xl text-[11px] font-semibold border transition-colors"
+              style={{
+                backgroundColor: 'var(--bg-hover)',
+                borderColor: 'var(--border-main)',
+                color: 'var(--text-primary)',
+              }}
             >
               Cancel Edit
             </button>
           </div>
         )}
 
-        <div className="flex border-b border-slate-200">
+        {/* Channel Provider Selector Tabs */}
+        <div className="flex border-b" style={{ borderColor: 'var(--border-main)' }}>
           <button
             onClick={() => {
               setActiveTab('whatsapp');
               setVerifyResult(null);
             }}
-            className={`pb-2.5 px-4 text-xs font-bold transition-all flex items-center gap-2 border-b-2 ${
-              activeTab === 'whatsapp'
-                ? 'border-emerald-600 text-emerald-700'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
-            }`}
+            className="pb-2.5 px-4 text-xs font-bold transition-all flex items-center gap-2 border-b-2"
+            style={{
+              borderColor: activeTab === 'whatsapp' ? 'var(--accent-green)' : 'transparent',
+              color: activeTab === 'whatsapp' ? 'var(--accent-green)' : 'var(--text-muted)',
+            }}
           >
             <MessageCircle className="w-4 h-4" />
             <span>Twilio WhatsApp</span>
@@ -1025,11 +1178,11 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
               setActiveTab('telegram');
               setVerifyResult(null);
             }}
-            className={`pb-2.5 px-4 text-xs font-bold transition-all flex items-center gap-2 border-b-2 ${
-              activeTab === 'telegram'
-                ? 'border-blue-600 text-blue-700'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
-            }`}
+            className="pb-2.5 px-4 text-xs font-bold transition-all flex items-center gap-2 border-b-2"
+            style={{
+              borderColor: activeTab === 'telegram' ? 'var(--accent-cyan)' : 'transparent',
+              color: activeTab === 'telegram' ? 'var(--accent-cyan)' : 'var(--text-muted)',
+            }}
           >
             <Send className="w-4 h-4" />
             <span>Telegram Bot</span>
@@ -1039,11 +1192,11 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
               setActiveTab('slack');
               setVerifyResult(null);
             }}
-            className={`pb-2.5 px-4 text-xs font-bold transition-all flex items-center gap-2 border-b-2 ${
-              activeTab === 'slack'
-                ? 'border-purple-600 text-purple-700'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
-            }`}
+            className="pb-2.5 px-4 text-xs font-bold transition-all flex items-center gap-2 border-b-2"
+            style={{
+              borderColor: activeTab === 'slack' ? 'var(--accent-purple)' : 'transparent',
+              color: activeTab === 'slack' ? 'var(--accent-purple)' : 'var(--text-muted)',
+            }}
           >
             <Hash className="w-4 h-4" />
             <span>Slack</span>
@@ -1053,13 +1206,16 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
         {/* Verification feedback box */}
         {verifyResult && (
           <div
-            className={`p-3 rounded-xl text-xs flex items-center gap-2 ${
-              verifyResult.valid
-                ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
-                : 'bg-rose-50 border border-rose-200 text-rose-800'
-            }`}
+            className="p-3 rounded-2xl text-xs flex items-center gap-2 border"
+            style={{
+              backgroundColor: verifyResult.valid
+                ? 'color-mix(in srgb, var(--accent-green) 15%, var(--bg-card))'
+                : 'color-mix(in srgb, var(--accent-magenta) 15%, var(--bg-card))',
+              borderColor: verifyResult.valid ? 'var(--accent-green)' : 'var(--accent-magenta)',
+              color: 'var(--text-primary)',
+            }}
           >
-            {verifyResult.valid ? <CheckCircle className="w-4 h-4 shrink-0 text-emerald-600" /> : <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />}
+            {verifyResult.valid ? <CheckCircle className="w-4 h-4 shrink-0 text-emerald-400" /> : <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />}
             <span>{verifyResult.message}</span>
           </div>
         )}
@@ -1067,26 +1223,33 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
         {/* WhatsApp Tab */}
         {activeTab === 'whatsapp' && (
           <div className="space-y-4 pt-1">
-            <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
-              <div className="flex items-center justify-between text-[11px] text-slate-600">
+            <div
+              className="p-3.5 rounded-2xl border space-y-1 font-mono"
+              style={{
+                backgroundColor: 'var(--bg-base)',
+                borderColor: 'var(--border-subtle)',
+              }}
+            >
+              <div className="flex items-center justify-between text-[11px]" style={{ color: 'var(--text-muted)' }}>
                 <span>Webhook URL to configure in Twilio Console:</span>
                 <button
                   type="button"
                   onClick={() => copyToClipboard(`${webhookBaseUrl}/whatsapp`, 'whatsapp')}
-                  className="flex items-center gap-1 text-emerald-700 hover:text-emerald-800 font-bold"
+                  className="flex items-center gap-1 font-bold transition-colors"
+                  style={{ color: 'var(--accent-green)' }}
                 >
                   {copiedWebhook === 'whatsapp' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copiedWebhook === 'whatsapp' ? 'Copied' : 'Copy URL'}</span>
                 </button>
               </div>
-              <div className="font-mono text-xs text-slate-900 select-all break-all font-semibold">
+              <div className="font-mono text-xs select-all break-all font-semibold" style={{ color: 'var(--accent-cyan)' }}>
                 {webhookBaseUrl}/whatsapp
               </div>
             </div>
 
             <form onSubmit={handleConnectWhatsApp} className="space-y-3">
               <div>
-                <label className="block text-[11px] font-semibold text-slate-600 uppercase mb-1">
+                <label className="block text-[11px] font-semibold uppercase mb-1" style={{ color: 'var(--text-secondary)' }}>
                   Twilio Account SID
                 </label>
                 <input
@@ -1094,12 +1257,17 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                   placeholder={editingConnection && editingConnection.channel_type === 'whatsapp' ? 'Leave blank to retain existing encrypted SID' : 'ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'}
                   value={waSid}
                   onChange={(e) => setWaSid(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-emerald-500 font-mono"
+                  className="w-full px-3 py-2 rounded-2xl text-xs border focus:outline-none transition-colors font-mono"
+                  style={{
+                    backgroundColor: 'var(--bg-input)',
+                    borderColor: 'var(--border-main)',
+                    color: 'var(--text-primary)',
+                  }}
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold text-slate-600 uppercase mb-1">
+                <label className="block text-[11px] font-semibold uppercase mb-1" style={{ color: 'var(--text-secondary)' }}>
                   Twilio Auth Token
                 </label>
                 <div className="relative">
@@ -1108,12 +1276,18 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                     placeholder={editingConnection && editingConnection.channel_type === 'whatsapp' ? 'Leave blank to retain existing encrypted Token' : '••••••••••••••••••••••••••••••••'}
                     value={waToken}
                     onChange={(e) => setWaToken(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-emerald-500 font-mono pr-9"
+                    className="w-full px-3 py-2 rounded-2xl text-xs border focus:outline-none transition-colors font-mono pr-9"
+                    style={{
+                      backgroundColor: 'var(--bg-input)',
+                      borderColor: 'var(--border-main)',
+                      color: 'var(--text-primary)',
+                    }}
                   />
                   <button
                     type="button"
                     onClick={() => setShowWaToken(!showWaToken)}
-                    className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-700"
+                    className="absolute right-3 top-2.5 transition-colors"
+                    style={{ color: 'var(--text-muted)' }}
                   >
                     {showWaToken ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -1121,7 +1295,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold text-slate-600 uppercase mb-1">
+                <label className="block text-[11px] font-semibold uppercase mb-1" style={{ color: 'var(--text-secondary)' }}>
                   Twilio WhatsApp Sender Number (E.164)
                 </label>
                 <input
@@ -1129,9 +1303,14 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                   placeholder="+14155238886"
                   value={waNumber}
                   onChange={(e) => setWaNumber(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-emerald-500 font-mono"
+                  className="w-full px-3 py-2 rounded-2xl text-xs border focus:outline-none transition-colors font-mono"
+                  style={{
+                    backgroundColor: 'var(--bg-input)',
+                    borderColor: 'var(--border-main)',
+                    color: 'var(--text-primary)',
+                  }}
                 />
-                <span className="text-[10px] text-slate-400 mt-1 block">
+                <span className="text-[10px] mt-1 block" style={{ color: 'var(--text-muted)' }}>
                   Twilio sandbox number (e.g. +14155238886) or your approved business WhatsApp number.
                 </span>
               </div>
@@ -1146,7 +1325,12 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                       auth_token: waToken.trim(),
                     })
                   }
-                  className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-50 text-slate-700 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 border border-slate-200"
+                  className="px-3.5 py-2 rounded-2xl text-xs font-semibold transition-all flex items-center gap-1.5 border disabled:opacity-50 hover:scale-102"
+                  style={{
+                    backgroundColor: 'var(--bg-hover)',
+                    borderColor: 'var(--border-main)',
+                    color: 'var(--text-primary)',
+                  }}
                 >
                   <RefreshCw className={`w-3.5 h-3.5 ${isVerifying ? 'animate-spin' : ''}`} />
                   <span>Test Credentials</span>
@@ -1155,7 +1339,11 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                 <button
                   type="submit"
                   disabled={connectMutation.isPending || updateConnectionMutation.isPending}
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-xl text-xs font-semibold transition-all shadow-xs flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-2xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 disabled:opacity-50 hover:scale-102 active:scale-98"
+                  style={{
+                    backgroundColor: 'var(--accent-green)',
+                    color: '#ffffff',
+                  }}
                 >
                   <Lock className="w-3.5 h-3.5" />
                   <span>{editingConnection && editingConnection.channel_type === 'whatsapp' ? 'Update & Save WhatsApp Channel' : 'Connect & Encrypt'}</span>
@@ -1168,26 +1356,33 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
         {/* Telegram Tab */}
         {activeTab === 'telegram' && (
           <div className="space-y-4 pt-1">
-            <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
-              <div className="flex items-center justify-between text-[11px] text-slate-600">
+            <div
+              className="p-3.5 rounded-2xl border space-y-1 font-mono"
+              style={{
+                backgroundColor: 'var(--bg-base)',
+                borderColor: 'var(--border-subtle)',
+              }}
+            >
+              <div className="flex items-center justify-between text-[11px]" style={{ color: 'var(--text-muted)' }}>
                 <span>Webhook URL to configure for Telegram Bot:</span>
                 <button
                   type="button"
                   onClick={() => copyToClipboard(`${webhookBaseUrl}/telegram`, 'telegram')}
-                  className="flex items-center gap-1 text-blue-700 hover:text-blue-800 font-bold"
+                  className="flex items-center gap-1 font-bold transition-colors"
+                  style={{ color: 'var(--accent-cyan)' }}
                 >
                   {copiedWebhook === 'telegram' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copiedWebhook === 'telegram' ? 'Copied' : 'Copy URL'}</span>
                 </button>
               </div>
-              <div className="font-mono text-xs text-slate-900 select-all break-all font-semibold">
+              <div className="font-mono text-xs select-all break-all font-semibold" style={{ color: 'var(--accent-cyan)' }}>
                 {webhookBaseUrl}/telegram
               </div>
             </div>
 
             <form onSubmit={handleConnectTelegram} className="space-y-3">
               <div>
-                <label className="block text-[11px] font-semibold text-slate-600 uppercase mb-1">
+                <label className="block text-[11px] font-semibold uppercase mb-1" style={{ color: 'var(--text-secondary)' }}>
                   Telegram Bot Token (from @BotFather)
                 </label>
                 <div className="relative">
@@ -1196,12 +1391,18 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                     placeholder={editingConnection && editingConnection.channel_type === 'telegram' ? 'Leave blank to retain existing encrypted Bot Token' : '123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ'}
                     value={tgToken}
                     onChange={(e) => setTgToken(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-500 font-mono pr-9"
+                    className="w-full px-3 py-2 rounded-2xl text-xs border focus:outline-none transition-colors font-mono pr-9"
+                    style={{
+                      backgroundColor: 'var(--bg-input)',
+                      borderColor: 'var(--border-main)',
+                      color: 'var(--text-primary)',
+                    }}
                   />
                   <button
                     type="button"
                     onClick={() => setShowTgToken(!showTgToken)}
-                    className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-700"
+                    className="absolute right-3 top-2.5 transition-colors"
+                    style={{ color: 'var(--text-muted)' }}
                   >
                     {showTgToken ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -1209,7 +1410,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold text-slate-600 uppercase mb-1">
+                <label className="block text-[11px] font-semibold uppercase mb-1" style={{ color: 'var(--text-secondary)' }}>
                   Your Telegram User ID or Chat ID
                 </label>
                 <input
@@ -1217,9 +1418,14 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                   placeholder="e.g. 987654321"
                   value={tgId}
                   onChange={(e) => setTgId(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-500 font-mono"
+                  className="w-full px-3 py-2 rounded-2xl text-xs border focus:outline-none transition-colors font-mono"
+                  style={{
+                    backgroundColor: 'var(--bg-input)',
+                    borderColor: 'var(--border-main)',
+                    color: 'var(--text-primary)',
+                  }}
                 />
-                <span className="text-[10px] text-slate-400 mt-1 block">
+                <span className="text-[10px] mt-1 block" style={{ color: 'var(--text-muted)' }}>
                   Obtain your chat ID by messaging @userinfobot on Telegram or sending /start to your bot.
                 </span>
               </div>
@@ -1233,7 +1439,12 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                       bot_token: tgToken.trim(),
                     })
                   }
-                  className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-50 text-slate-700 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 border border-slate-200"
+                  className="px-3.5 py-2 rounded-2xl text-xs font-semibold transition-all flex items-center gap-1.5 border disabled:opacity-50 hover:scale-102"
+                  style={{
+                    backgroundColor: 'var(--bg-hover)',
+                    borderColor: 'var(--border-main)',
+                    color: 'var(--text-primary)',
+                  }}
                 >
                   <RefreshCw className={`w-3.5 h-3.5 ${isVerifying ? 'animate-spin' : ''}`} />
                   <span>Test Bot Token</span>
@@ -1242,7 +1453,11 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                 <button
                   type="submit"
                   disabled={connectMutation.isPending || updateConnectionMutation.isPending}
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-xl text-xs font-semibold transition-all shadow-xs flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-2xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 disabled:opacity-50 hover:scale-102 active:scale-98"
+                  style={{
+                    backgroundColor: 'var(--accent-cyan)',
+                    color: '#ffffff',
+                  }}
                 >
                   <Lock className="w-3.5 h-3.5" />
                   <span>{editingConnection && editingConnection.channel_type === 'telegram' ? 'Update & Save Telegram Bot' : 'Connect & Encrypt'}</span>
@@ -1255,43 +1470,50 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
         {/* Slack Tab */}
         {activeTab === 'slack' && (
           <div className="space-y-4 pt-1">
-            <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
-              <div className="flex items-center justify-between text-[11px] text-slate-600">
+            <div
+              className="p-3.5 rounded-2xl border space-y-1 font-mono"
+              style={{
+                backgroundColor: 'var(--bg-base)',
+                borderColor: 'var(--border-subtle)',
+              }}
+            >
+              <div className="flex items-center justify-between text-[11px]" style={{ color: 'var(--text-muted)' }}>
                 <span>Slack Events API / Webhook Request URL:</span>
                 <button
                   type="button"
                   onClick={() => copyToClipboard(`${webhookBaseUrl}/slack`, 'slack')}
-                  className="flex items-center gap-1 text-purple-700 hover:text-purple-800 font-bold"
+                  className="flex items-center gap-1 font-bold transition-colors"
+                  style={{ color: 'var(--accent-purple)' }}
                 >
                   {copiedWebhook === 'slack' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copiedWebhook === 'slack' ? 'Copied' : 'Copy URL'}</span>
                 </button>
               </div>
-              <div className="font-mono text-xs text-slate-900 select-all break-all font-semibold">
+              <div className="font-mono text-xs select-all break-all font-semibold" style={{ color: 'var(--accent-purple)' }}>
                 {webhookBaseUrl}/slack
               </div>
             </div>
 
-            <div className="flex gap-4 border-b border-slate-200 pb-2">
+            <div className="flex gap-4 border-b pb-2" style={{ borderColor: 'var(--border-main)' }}>
               <button
                 type="button"
                 onClick={() => setSlackMode('webhook')}
-                className={`text-xs font-bold pb-1 border-b-2 ${
-                  slackMode === 'webhook'
-                    ? 'border-purple-600 text-purple-700'
-                    : 'border-transparent text-slate-500 hover:text-slate-800'
-                }`}
+                className="text-xs font-bold pb-1 border-b-2"
+                style={{
+                  borderColor: slackMode === 'webhook' ? 'var(--accent-purple)' : 'transparent',
+                  color: slackMode === 'webhook' ? 'var(--accent-purple)' : 'var(--text-muted)',
+                }}
               >
                 Incoming Webhook URL
               </button>
               <button
                 type="button"
                 onClick={() => setSlackMode('bot')}
-                className={`text-xs font-bold pb-1 border-b-2 ${
-                  slackMode === 'bot'
-                    ? 'border-purple-600 text-purple-700'
-                    : 'border-transparent text-slate-500 hover:text-slate-800'
-                }`}
+                className="text-xs font-bold pb-1 border-b-2"
+                style={{
+                  borderColor: slackMode === 'bot' ? 'var(--accent-purple)' : 'transparent',
+                  color: slackMode === 'bot' ? 'var(--accent-purple)' : 'var(--text-muted)',
+                }}
               >
                 Slack Bot Token (OAuth)
               </button>
@@ -1300,7 +1522,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
             <form onSubmit={handleConnectSlack} className="space-y-3">
               {slackMode === 'webhook' ? (
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-600 uppercase mb-1">
+                  <label className="block text-[11px] font-semibold uppercase mb-1" style={{ color: 'var(--text-secondary)' }}>
                     Slack Incoming Webhook URL
                   </label>
                   <input
@@ -1308,13 +1530,18 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                     placeholder={editingConnection && editingConnection.channel_type === 'slack' ? 'Leave blank to retain existing Webhook URL' : 'https://hooks.slack.com/services/YOUR/WEBHOOK/URL'}
                     value={slackWebhook}
                     onChange={(e) => setSlackWebhook(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-purple-500 font-mono"
+                    className="w-full px-3 py-2 rounded-2xl text-xs border focus:outline-none transition-colors font-mono"
+                    style={{
+                      backgroundColor: 'var(--bg-input)',
+                      borderColor: 'var(--border-main)',
+                      color: 'var(--text-primary)',
+                    }}
                   />
                 </div>
               ) : (
                 <>
                   <div>
-                    <label className="block text-[11px] font-semibold text-slate-600 uppercase mb-1">
+                    <label className="block text-[11px] font-semibold uppercase mb-1" style={{ color: 'var(--text-secondary)' }}>
                       Slack Bot User OAuth Token (xoxb-...)
                     </label>
                     <div className="relative">
@@ -1323,19 +1550,25 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                         placeholder={editingConnection && editingConnection.channel_type === 'slack' ? 'Leave blank to retain existing Bot Token' : 'xoxb-your-slack-bot-token'}
                         value={slackBotToken}
                         onChange={(e) => setSlackBotToken(e.target.value)}
-                        className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-purple-500 font-mono pr-9"
+                        className="w-full px-3 py-2 rounded-2xl text-xs border focus:outline-none transition-colors font-mono pr-9"
+                        style={{
+                          backgroundColor: 'var(--bg-input)',
+                          borderColor: 'var(--border-main)',
+                          color: 'var(--text-primary)',
+                        }}
                       />
                       <button
                         type="button"
                         onClick={() => setShowSlackToken(!showSlackToken)}
-                        className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-700"
+                        className="absolute right-3 top-2.5 transition-colors"
+                        style={{ color: 'var(--text-muted)' }}
                       >
                         {showSlackToken ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                       </button>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold text-slate-600 uppercase mb-1">
+                    <label className="block text-[11px] font-semibold uppercase mb-1" style={{ color: 'var(--text-secondary)' }}>
                       Target Channel ID (e.g. C01234567)
                     </label>
                     <input
@@ -1343,7 +1576,12 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                       placeholder="C01234567"
                       value={slackChannelId}
                       onChange={(e) => setSlackChannelId(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-purple-500 font-mono"
+                      className="w-full px-3 py-2 rounded-2xl text-xs border focus:outline-none transition-colors font-mono"
+                      style={{
+                        backgroundColor: 'var(--bg-input)',
+                        borderColor: 'var(--border-main)',
+                        color: 'var(--text-primary)',
+                      }}
                     />
                   </div>
                 </>
@@ -1361,7 +1599,12 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                         : { bot_token: slackBotToken.trim() }
                     )
                   }
-                  className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-50 text-slate-700 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 border border-slate-200"
+                  className="px-3.5 py-2 rounded-2xl text-xs font-semibold transition-all flex items-center gap-1.5 border disabled:opacity-50 hover:scale-102"
+                  style={{
+                    backgroundColor: 'var(--bg-hover)',
+                    borderColor: 'var(--border-main)',
+                    color: 'var(--text-primary)',
+                  }}
                 >
                   <RefreshCw className={`w-3.5 h-3.5 ${isVerifying ? 'animate-spin' : ''}`} />
                   <span>Test Slack Connection</span>
@@ -1370,7 +1613,11 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ user }) => {
                 <button
                   type="submit"
                   disabled={connectMutation.isPending || updateConnectionMutation.isPending}
-                  className="px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white rounded-xl text-xs font-semibold transition-all shadow-xs flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-2xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 disabled:opacity-50 hover:scale-102 active:scale-98"
+                  style={{
+                    backgroundColor: 'var(--accent-purple)',
+                    color: '#ffffff',
+                  }}
                 >
                   <Lock className="w-3.5 h-3.5" />
                   <span>{editingConnection && editingConnection.channel_type === 'slack' ? 'Update & Save Slack Channel' : 'Connect & Encrypt'}</span>
